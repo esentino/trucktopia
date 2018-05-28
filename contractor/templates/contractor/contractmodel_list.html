@@ -1,0 +1,37 @@
+<h1>Contracts</h1>
+
+<table>
+    <thead>
+        <tr>
+            <td>Weight</td>
+            <td>On road</td>
+            <td>Delivered</td>
+            <td>Price</td>
+            <td>Distance</td>
+            <td>taken by</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for contract in contracts %}
+        <tr>
+            <td>{{contract.weight}}</td>
+            <td>{{contract.on_road}}</td>
+            <td>{{contract.delivered}}</td>
+            <td>{{contract.price}}</td>
+            <td>{{contract.distance}}</td>
+            <td>{{contract.taken.username}}</td>
+            <td><a href="{% url 'send' contract_id=contract.pk %}">send</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>

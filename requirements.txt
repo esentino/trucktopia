@@ -1,0 +1,4 @@
+Celery
+SQLAlchemy
+django
+django-celery-results
