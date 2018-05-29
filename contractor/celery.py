@@ -1,7 +1,7 @@
 import os
 from random import randint
 
-from celery import Celery, shared_task
+from celery import Celery
 from django.db.models import F
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'trucktopia.settings')
@@ -15,7 +15,6 @@ app.autodiscover_tasks()
 def setup_schedule_tasks(sender, **kwargs):
     sender.add_periodic_task(15.0, create_contract.s(), name="Create the contract")
     sender.add_periodic_task(15.0, finish_contract.s(), name="Finish contract")
-
 
 
 @app.task
@@ -39,9 +38,10 @@ def finish_contract():
     :return:
     """
     from contractor.models import ContractModel
-    contracts = ContractModel.objects.filter(weight=F('delivered'))
-    for contract in contracts:
+    contracts = ContractModel.objects.filter(weight__lte=F('delivered'))
+    for contract in contracts.all():
         contract.delete()
+
 
 @app.task
 def finish_trip(contract_id, weight):

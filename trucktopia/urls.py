@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from contractor.views import ContractList, SendTruck
+from contractor.views import ContractList, SendTruck, ResultList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ContractList.as_view()),
     path('send/<int:contract_id>', SendTruck.as_view(), name="send"),
+    path('results/', ResultList.as_view(), name="results"),
 ]
